@@ -1,0 +1,21 @@
+CREATE TABLE tb_usuarios(
+    id                   INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre               VARCHAR (45) NULL,
+    apellido             VARCHAR (45) NULL,
+    ci                   VARCHAR (45) NULL,
+    fecha_nacimiento     VARCHAR (45) NULL,
+    celular              VARCHAR (45) NULL,
+    email                VARCHAR (45) NULL,
+    password             VARCHAR (45) NULL,
+    token                VARCHAR (45) NULL,
+    cargo                VARCHAR (45) NULL,
+    genero               VARCHAR (45) NULL,
+    perfil               TEXT NULL,
+    user_creacion        VARCHAR (45) NULL,
+    user_actualizacion   VARCHAR (45) NULL,
+    user_eliminacion     VARCHAR (45) NULL,
+    fecha_creacion       DATETIME NULL,
+    feha_actualizacion   DATETIME NULL,
+    feha_eliminacion     DATETIME NULL,
+    estado               VARCHAR (45) NULL
+);

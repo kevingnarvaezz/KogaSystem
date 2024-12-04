@@ -1,0 +1,33 @@
+.mbody {
+    margin-top: -40px;
+    margin-bottom: 30px;
+}
+
+.bodyInfo img {
+    width: 150px;
+    height: auto;
+}
+
+.bodyInfo p {
+    color: #634e42;
+}
+
+.bodyBoton {
+    background: #52c234;
+    background: -webkit-linear-gradient(to left, #061700, #52c234);
+    background: linear-gradient(to left, #061700, #52c234);
+    color: #ffff;
+    padding: 20px;
+}
+
+.bodyBoton:hover {
+    background: #56ab2f;
+    background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);
+    background: linear-gradient(to right, #a8e063, #56ab2f);
+    color: #ffff;
+}
+
+.textH1{
+    color: #634e42;
+    margin-bottom: 20px;
+}

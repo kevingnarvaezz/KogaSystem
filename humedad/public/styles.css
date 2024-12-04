@@ -1,0 +1,22 @@
+.chart-container {
+    width: 600;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.value-display {
+    margin-top: -80px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.mainText {
+    margin-top: -25px;
+    margin-bottom: 30px;
+
+}
+
+.mainColor{
+    color: #634e42;
+}
+

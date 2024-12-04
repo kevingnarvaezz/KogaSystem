@@ -1,0 +1,52 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    background: #52c234;
+    background: -webkit-linear-gradient(to left, #06170089, #53c23458);
+    background: linear-gradient(to left, #06170089, #53c23458), url('../public/Img/fondo.jpg');
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bgCardLogin {
+    background: #52c234;
+    background: -webkit-linear-gradient(to left, #061700, #52c234);
+    background: linear-gradient(to left, #061700, #52c234);
+}
+
+.btnInicio {
+    background: #52c234;
+    background: -webkit-linear-gradient(to left, #061700, #52c234);
+    background: linear-gradient(to left, #061700, #52c234);
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.btnInicio:hover {
+    background: #56ab2f;
+    background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);
+    background: linear-gradient(to right, #a8e063, #56ab2f);
+    color: #ffff;
+
+}
+
+.bgCard {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.imgKoga img{
+    height: 200px;
+    width: auto;
+}
