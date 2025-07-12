@@ -1,0 +1,12 @@
+.imgClase img{
+    width: 150px;
+    height: auto;
+    margin: 0px 50px 0px 50px;
+}
+
+.pText p{
+    margin-top: 10px;
+    font-size: 20px;
+    color: black;
+    text-align: center;
+}

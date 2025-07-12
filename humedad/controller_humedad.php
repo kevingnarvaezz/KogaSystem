@@ -4,7 +4,7 @@ include "../app/config/config.php"; // Conexión a la base de datos
 // Obtener todos los sensores
 function obtenerSensores() {
     global $pdo;
-    $query = "SELECT * FROM Sensores";
+    $query = "SELECT * FROM sensores";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

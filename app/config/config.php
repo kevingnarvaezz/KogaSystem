@@ -1,25 +1,20 @@
 <?php
 
-if (!defined('SERVIDOR')) {
-    define('SERVIDOR', 'localhost');
-}
-if (!defined('USUARIO')) {
-    define('USUARIO', 'root');
-}
-if (!defined('PASSWORD')) {
-    define('PASSWORD', 'mysql');
-}
-if (!defined('BD')) {
-    define('BD', 'kogasystem');
-}
 
-$URL = 'http://localhost/KogaSystem';
+    define('SERVIDOR', 'localhost');
+    define('USUARIO', 'root');
+    define('PASSWORD', 'mysql');
+
+    define('BD', 'kogasystem');
+
+
+$URL = 'http://localhost/kogasystem';
 
 $servidor = "mysql:dbname=" . BD . ";host=" . SERVIDOR;
 
 try {
     $pdo = new PDO($servidor, USUARIO, PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8"));
-    // echo "<script>alert('La conexión a la base de datos fue exitosa.')</script>";
+    //echo "Conexión exitosa en config.php.<br>"; // Agregar este mensaje temporalmente
 } catch (PDOException $e) {
-    echo "<script>alert('Error en la conexión de la base de datos.')</script>";
+    echo "Error en la conexión: " . $e->getMessage();
 }

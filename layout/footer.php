@@ -13,7 +13,7 @@
                 <div class="col-12 col-md-6 footerInfo mb-3 mb-md-0">
                     <img src="<?php echo $URL; ?>/layout/img/Bla-Neg.png" alt="Logo" style="width: 50px;" class="mb-2">
                     <p class="mb-0">
-                        <strong>Koga System</strong> © 2024 Todos los derechos reservados
+                        <strong>Koga System</strong> © 2025 Todos los derechos reservados
                     </p>
                 </div>
                 <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end ">

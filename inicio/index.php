@@ -1,5 +1,5 @@
 <?php
-include("../app/config/config.php")
+include("../app/config/config.php");
 ?>
 
 <!DOCTYPE html>
@@ -8,33 +8,35 @@ include("../app/config/config.php")
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koga System</title>
-    <?php include("../layout/head.php");?>
+    <?php include("../layout/head.php"); ?>
     <link rel="stylesheet" href="<?php echo $URL; ?>/inicio/css/styles.css">
 </head>
 <body>
-    <?php include("../layout/header.php");?>
+    <?php include("../layout/header.php"); ?>
 
-    <body>
-        <div class="container">
-            <div class="row mbody">
-                <div class="col-12 d-flex flex-column justify-content-center align-items-center bodyInfo">
-                    <img src="<?php echo $URL; ?>/layout/img/Logo.png" alt="Logo">
-                    <p class="h1 text-center">Koga System</p>
-                </div>
+    <div class="container">
+        <div class="row mbody">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center bodyInfo">
+                <img src="<?php echo $URL; ?>/layout/img/Logo.png" alt="Logo">
+                <p class="h1 text-center">Koga System</p>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6">
-                    <div class="d-grid gap-2">
-                        <a href="<?php echo $URL?>/humedad/sensores.php" class="btn bodyBoton">Control de Humedad</a>
-                        <a href="" class="btn bodyBoton">Informes</a>
-                        <a href="<?php echo $URL; ?>/usuarios/index.php" class="btn bodyBoton">Control de Usuarios</a>
-                        <a href="<?php echo $URL; ?>/configuraciones/index.php" class="btn bodyBoton">Configuraciones</a>
-                    </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <div class="d-grid gap-2">
+                    <!-- Botón unificado -->
+                    <a href="<?php echo $URL; ?>/monitoreo/sensores.php" class="btn bodyBoton">Monitoreo</a>
+
+                    <!-- Resto de opciones -->
+                    <a href="<?php echo $URL; ?>/informes/sensores_lectura.php" class="btn bodyBoton">Informes</a>
+                    <a href="<?php echo $URL; ?>/usuarios/index.php" class="btn bodyBoton">Control de Usuarios</a>
+                    <a href="<?php echo $URL; ?>/configuraciones/index.php" class="btn bodyBoton">Configuraciones</a>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
 
-    <?php include("../layout/footer.php");?>
+    <?php include("../layout/footer.php"); ?>
 </body>
 </html>

@@ -1,128 +1,145 @@
 <?php
-include "controller_humedad.php";
+/* --------------------------------------------------------------------------
+   Vista de lecturas de HUMEDAD
+   - Si el id pertenece a un sensor de temperatura → redirige a temperatura
+   - Muestra último valor en “gauge”
+   - Historial de las últimas 24 h en un área/onda (Chart.js) + tabla
+   -------------------------------------------------------------------------- */
+
+include "controller_humedad.php";   // Carga helper + $pdo
 
 $id_sensor = $_GET['id'] ?? null;
-if (!$id_sensor) {
-    echo "ID de sensor no especificado.";
+if (!$id_sensor) { echo "ID de sensor no especificado."; exit; }
+
+/* ---- 1. Verificar tipo de sensor --------------------------------------- */
+$tipo = $pdo->prepare("SELECT tipo FROM sensores WHERE id_sensor = ?");
+$tipo->execute([$id_sensor]);
+$tipo = $tipo->fetchColumn();
+
+if ($tipo === 'T') {                       // si es temperatura → redirige
+    header("Location: ../temperatura/lectura.php?id=".$id_sensor);
     exit;
 }
 
-// Obtener datos del sensor
-$ultima_lectura = obtenerUltimaLectura($id_sensor);
-$lecturas_historicas = obtenerLecturasUltimasHoras($id_sensor);
+/* ---- 2. Lecturas -------------------------------------------------------- */
+$ultima     = obtenerUltimaLectura($id_sensor);            // 1 registro
+$historico  = obtenerLecturasUltimasHoras($id_sensor, 24); // array con 'hora', 'humedad'
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Última Lectura del Sensor <?= $id_sensor ?></title>
+    <title>Lectura Sensor H<?= $id_sensor ?></title>
+
     <?php include "../layout/head.php"; ?>
-    <link rel="stylesheet" href="<?php echo $URL ?>/humedad/public/styles_lectura.css">
+    <link rel="stylesheet" href="<?= $URL ?>/humedad/public/styles_lectura.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
-    <?php include "../layout/header.php"; ?>
+<?php include "../layout/header.php"; ?>
 
-    <main class="container my-5">
-        <h1 class="text-center mb-4 h1Lectura">Última Lectura del Sensor ID: <?= $id_sensor ?></h1>
+<main class="container my-5">
+    <h1 class="text-center mb-4 h1Lectura">
+        Última Lectura del Sensor ID: <?= $id_sensor ?>
+    </h1>
 
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-6 text-center lectura">
-                <canvas id="gaugeChart"></canvas>
-                <div class="lecturainfo">
-                    <h2 class="mt-4"><?= $ultima_lectura['humedad'] ?>%</h2>
-                    <p>Último registro: <?= date("H:i", strtotime($ultima_lectura['fecha_lectura'])) ?>hs – <?= date("d/m/Y", strtotime($ultima_lectura['fecha_lectura'])) ?></p>
-                </div>
+<?php if (!$ultima): ?>
+    <p class="text-center">Este sensor todavía no tiene lecturas de humedad.</p>
+
+<?php else: ?>
+    <!-- ---------------- Gauge ---------------- -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6 text-center lectura">
+            <canvas id="gaugeChart"></canvas>
+            <div class="lecturainfo">
+                <h2 class="mt-4"><?= $ultima['humedad'] ?> %</h2>
+                <p>
+                    Último registro:
+                    <?= date('H:i', strtotime($ultima['fecha_lectura'])) ?> hs –
+                    <?= date('d/m/Y', strtotime($ultima['fecha_lectura'])) ?>
+                </p>
             </div>
         </div>
+    </div>
 
-        <!-- Gráfico de línea -->
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h2 class="text-center mb-4 h1Lectura">Histórico de Humedad (Últimas Horas)</h2>
-                <canvas id="lineChart"></canvas>
-            </div>
+    <!-- ---------------- Historial ---------------- -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4 h1Lectura">
+                Histórico de Humedad (Últimas 24 h)
+            </h2>
+            <canvas id="lineChart"></canvas>
         </div>
-    </main>
+    </div>
 
-    <?php include "../layout/footer.php"; ?>
+    <h3 class="mt-4">Tabla de lecturas (24 h)</h3>
+    <table class="table table-sm">
+        <thead>
+            <tr><th>Hora</th><th>Humedad (%)</th></tr>
+        </thead>
+        <tbody>
+        <?php foreach ($historico as $h): ?>
+            <tr>
+                <td><?= $h['hora'] ?></td>
+                <td><?= $h['humedad'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+</main>
 
-    <script>
-        // Datos para el gráfico de indicador
-        const ctxGauge = document.getElementById('gaugeChart').getContext('2d');
-        const humedad = <?= $ultima_lectura['humedad'] ?>;
+<?php include "../layout/footer.php"; ?>
 
-        new Chart(ctxGauge, {
-            type: 'doughnut',
-            data: {
-                labels: ['Humedad', 'Restante'],
-                datasets: [{
-                    data: [humedad, 100 - humedad],
-                    backgroundColor: ['#52c234', '#e3c8b8'],
-                    borderWidth: 0,
-                }]
-            },
-            options: {
-                rotation: -90,
-                circumference: 180,
-                cutout: '70%',
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: false },
-                }
-            }
-        });
+<?php if ($ultima): /* scripts solo si existe data */ ?>
+<script>
+/* ---------- Gauge ---------- */
+const humedad = <?= $ultima['humedad'] ?>;
+new Chart(document.getElementById('gaugeChart').getContext('2d'),{
+    type:'doughnut',
+    data:{
+        labels:['Humedad','Restante'],
+        datasets:[{
+            data:[humedad, 100-humedad],
+            backgroundColor:['#52c234','#e3c8b8'],
+            borderWidth:0
+        }]
+    },
+    options:{
+        rotation:-90,
+        circumference:180,
+        cutout:'70%',
+        plugins:{ legend:{display:false}, tooltip:{enabled:false} }
+    }
+});
 
-        // Datos dinámicos para el gráfico de línea
-        const lecturas = <?= json_encode($lecturas_historicas) ?>;
-        const labels = lecturas.map(item => item.hora); // Horas
-        const datosHumedad = lecturas.map(item => item.humedad); // Humedad
+/* ---------- Área / onda ---------- */
+const hist     = <?= json_encode($historico) ?>; // [{hora,humedad}, …]
+const labels   = hist.map(r => r.hora);
+const datosHum = hist.map(r => r.humedad);
 
-        const ctxLine = document.getElementById('lineChart').getContext('2d');
-
-        new Chart(ctxLine, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Humedad',
-                    data: datosHumedad,
-                    borderColor: '#52c234',
-                    backgroundColor: 'rgba(226, 178, 74, 0.2)',
-                    fill: true,
-                    tension: 0.4, // Suavizado de la curva
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Hora'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Humedad (%)'
-                        },
-                        suggestedMin: 0,
-                        suggestedMax: 100
-                    }
-                }
-            }
-        });
-    </script>
+new Chart(document.getElementById('lineChart').getContext('2d'),{
+    type:'line',
+    data:{
+        labels: labels,
+        datasets:[{
+            label:'Humedad (%)',
+            data: datosHum,
+            tension:0.4,
+            fill:true
+        }]
+    },
+    options:{
+        plugins:{ legend:{display:false} },
+        scales:{
+            x:{ title:{display:true,text:'Hora'} },
+            y:{ title:{display:true,text:'%'},
+                suggestedMin:0, suggestedMax:100 }
+        }
+    }
+});
+</script>
+<?php endif; ?>
 </body>
-
 </html>

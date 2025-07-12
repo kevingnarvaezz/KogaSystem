@@ -1,0 +1,44 @@
+
+.btnBodyCreate{
+    background: #52c234;
+    background: -webkit-linear-gradient(to left, #061700, #52c234);
+    background: linear-gradient(to left, #061700, #52c234);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: -40px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.btnBodyCreate:hover{
+    background: #56ab2f;
+    background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);
+    background: linear-gradient(to right, #a8e063, #56ab2f);
+    color: #ffff;
+}
+
+.btnCreate{
+    background: #52c234;
+    background: -webkit-linear-gradient(to left, #061700, #52c234);
+    background: linear-gradient(to left, #061700, #52c234);
+    color: #fff;
+}
+
+.btnCreate:hover{
+    background: #56ab2f;
+    background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);
+    background: linear-gradient(to right, #a8e063, #56ab2f);
+    color: #ffff;
+}
+
+.cardHeader{
+    background: #52c234;
+    background: -webkit-linear-gradient(to left, #061700, #52c234);
+    background: linear-gradient(to left, #061700, #52c234);
+    color: #ffff;
+}
+
+.textContraseña{
+    color: #56ab2f;
+}
+

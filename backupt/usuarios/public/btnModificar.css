@@ -1,0 +1,15 @@
+.modificarBtn {
+    background: #1e130c;
+    background: -webkit-linear-gradient(to left, #9a8478, #752d00);
+    background: linear-gradient(to left, #9a8478, #752d00);
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.modificarBtn:hover {
+    background: #D1913C;
+    background: -webkit-linear-gradient(to right, #FFD194, #D1913C);
+    background: linear-gradient(to right, #FFD194, #D1913C);
+    color: #ffff;
+}
